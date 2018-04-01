@@ -1,4 +1,4 @@
-var mongoose = require("mongoose");
+const mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 
 //Simple mongo schema for user. Needs username and password, sets up for key later
@@ -17,4 +17,18 @@ var userSchema = new Schema({
 
 });
 var User = mongoose.model('User', userSchema);
-module.exports = User;
+
+//Simple mongo schema for testing stuff
+var stuffSchema = new Schema({
+    name : {
+      type: String,
+      required: true
+    },
+    date: {
+      type: Date,
+      default: Date.now
+    }
+})
+var Stuff = mongoose.model('Stuff', stuffSchema);
+
+module.exports = {User: User, Stuff: Stuff};
