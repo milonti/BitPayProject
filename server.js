@@ -24,5 +24,8 @@ app.use((err, request, response, next) => {
 })
 
 app.listen(port, (err) => {
+  if(err){
+    console.log(err)
+  }
   console.log(`server listening on ${port}`);
 })
