@@ -131,7 +131,24 @@ exports.insertSignedMessage = (request, response) => {
         if(user){
           //If user has not set up a key, they cannot store encoded messages
           if(user.publicKey){
-
+            openpgp.verify(user.publicKey, openpgp.cleartext.readArmored(userdata.userMessage)).then(function(verified){
+              console.log(verified.signatures);
+              valid = verified.signatures[0].valid;
+              if(valid){
+                //If verification succeeds add message to database
+                User.update({username: userdata.username},{userMessage: userdata.userMessage }, {}, function(err, num){
+                  if(err){
+                    response.status(500).send(err);
+                  }
+                  else if(num.nModified > 0){ //Easy check for how many objects were modified
+                    response.status(200).send(userdata.username + ' updated public key:\n' + userdata.publicKey);
+                  }
+                  else {
+                    response.status(200).send('No users found to update (how did you manage to authenticate?)');
+                  }
+                })
+              }
+            });
           }
           else response.status(405).send('No public key associated with' + user.username + '. Encryption could not occur.');
         }
