@@ -27,6 +27,10 @@ function createWindow(){
   })
 }
 
+exports.formInput = function(tarWindow, form){
+  tarWindow.webContents.send('process-form',form);
+}
+
 app.on('ready', createWindow)
 app.on('window-all-closed', () => {
   console.log('Closing application');
