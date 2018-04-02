@@ -17,4 +17,4 @@ mongoose.connect(uri, options).then(
 );
 
 // require any models
-require("../models");
+require("../mongo/models");

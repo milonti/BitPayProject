@@ -1,4 +1,4 @@
-const User = require("./models.js").User;
+const User = require("../mongo/models.js").User;
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 const openpgp = require("openpgp");
@@ -135,7 +135,7 @@ exports.insertSignedMessage = (request, response) => {
               message: openpgp.cleartext.readArmored(userdata.userMessage),
               publicKeys : openpgp.key.readArmored(user.publicKey).keys
             }
-            
+
             openpgp.verify(options).then(function(verified){
               console.log(verified.signatures);
               valid = verified.signatures[0].valid;

@@ -1,12 +1,12 @@
 const express = require('express');
-const models = require('./models');
+const models = require('../mongo/models');
 const bodyParser = require('body-parser');
 const openpgp = require('openpgp');
 openpgp.initWorker({path: 'openpgp.worker.js'});
 openpgp.config.aead_protect = true;
 const userController = require("./userController.js");
 //Connect to mongoDB cloud instance
-require("./config/db");
+require("../config/db");
 
 const app = express();
 const port = 3000;
