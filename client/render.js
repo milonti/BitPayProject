@@ -28,8 +28,6 @@ ipcRenderer.on('key-file-opened', function(e,data){
 });
 
 ipcRenderer.on('recieve-status', function(e, args){
-  consolelog(e);
-  consolelog(args);
   if(args === undefined) return;
   var div = document.getElementById('div_statusMsg');
   if(args[0] == 0){
