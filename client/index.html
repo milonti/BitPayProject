@@ -2,32 +2,40 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>Hello World!</title>
+  <title>SMSC</title>
 </head>
 <body>
   <h1 style="text-align: center;">Signed Message Sender Client</h1>
-  <table style="width: 80%; border-color: black; margin-left: auto; margin-right: auto;" border="line" cellpadding="2px" cellspacing="2px">
+  <table style="width: 80%; margin-left: auto; margin-right: auto;" cellpadding="2px" cellspacing="2px">
     <tbody>
       <tr>
         <td style="width: 50%;">Username:</td>
-        <td style="width: 50%;"><input type="text" style="width: 98%;" name="inp_username" /></td>
+        <td style="width: 50%;"><input type="text" style="width: 98%;" id="inp_username" /></td>
       </tr>
       <tr>
         <td style="width: 50%;">Password:</td>
-        <td style="width: 50%;"><input type="password" style="width: 98%;" name="inp_password" /></td>
+        <td style="width: 50%;"><input type="password" style="width: 98%;" id="inp_password" /></td>
       </tr>
       <tr>
         <td style="width: 50%;">Message:</td>
-        <td style="width: 50%;"><input type="text" style="width: 98%;" name="inp_message" /></td>
+        <td style="width: 50%;"><input type="text" style="width: 98%;" id="inp_message" /></td>
       </tr>
       <tr>
         <td style="width: 50%;">Private Key:</td>
-        <td style="width: 50%; text-align: center;"><button type="button" name="btn_browse">Browse for Key</button><span id="span_filePath"></span><br /> OR<br /> <textarea style="width: 98%;" rows="10 name=" txt_key=""></textarea></td>
+        <td style="width: 50%; text-align: center;">
+          <button type="button" name="btn_browse" onclick="selectFile();">Browse for Key TXT file</button>
+          <br /> OR<br />
+          <textarea style="width: 98%;" rows="10 name=" id="txt_key">Paste key here</textarea></td>
+      </tr>
+      <tr style="">
+        <td colspan="2" style="width: 100%; border: 0;">
+          <p style="text-align: center;"><button style="width: 100%;" onclick="submitMessage();">Submit Message</button></p>
+          <div id="div_statusMsg" style=""> &nbsp;</div>
+        </td>
       </tr>
     </tbody>
   </table>
-  <p style="text-align: center;"><button style="width: 80%;">Submit Message</button></p><br/>
-  <div id="div_statusMsg" style="text-align: center;"></div>
+
   <script src='render.js'></script>
 </body>
 </html>
