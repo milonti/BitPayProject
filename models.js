@@ -13,7 +13,7 @@ var userSchema = new Schema({
     type: String,
     required: true
   },
-  keyInfo: String
+  publicKey: String
 
 });
 var User = mongoose.model('User', userSchema);
