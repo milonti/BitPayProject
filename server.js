@@ -26,10 +26,7 @@ app.post('/', (request, response) => {
 })
 
 //Basic new user creation
-app.post('/newUser',(request, response,err) => {
-  if(err){
-    console.log('yo')
-  }
+app.post('/newUser',(request, response) => {
   var stuffName = request.body.username;
   if(stuffName == null || stuffName == undefined){
     response.status(500).send('No username found');
