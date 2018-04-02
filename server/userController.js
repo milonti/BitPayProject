@@ -146,7 +146,7 @@ exports.insertSignedMessage = (request, response) => {
                     response.status(500).send(err);
                   }
                   else if(num.nModified > 0){ //Easy check for how many objects were modified
-                    response.status(200).send(userdata.username + ' updated personal signed message:\n' + userdata.userMessage);
+                    response.status(200).send(userdata.username + ' updated personal signed message:\r\n' + userdata.userMessage);
                   }
                   else {
                     response.status(200).send('No users found to update (how did you manage to authenticate?)');

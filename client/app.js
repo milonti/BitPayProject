@@ -30,7 +30,7 @@ function createWindow(){
   })
 }
 
-//Loads text file of public key and sends it to the renderer
+//Loads text file of private key and sends it to the renderer
 ipcMain.on('key-file-selected', (e, args) => {
   if(args === undefined) return;
   var fileName = args[0];
@@ -39,6 +39,7 @@ ipcMain.on('key-file-selected', (e, args) => {
   })
 });
 
+//Recieves form fields to make and send request to server
 ipcMain.on('submit-signed-message', (e,args) => {
   var status,statusMsg;
   if(args == undefined){
@@ -57,13 +58,40 @@ ipcMain.on('submit-signed-message', (e,args) => {
     win.webContents.send('recieve-status', [status, statusMsg]);
     return;
   }
-
-
-
-  status = 0;
-  statusMsg = "It done broke";
-  win.webContents.send('recieve-status', [status, statusMsg]);
-})
+  var signOptions = {
+    data : message,
+    privateKeys : [openpgp.key.readArmored(key).keys[0]]
+  }
+  // status = 1;
+  // statusMsg = "Signing message..."
+  // win.webContents.send('recieve-status', [status, statusMsg]);
+  openpgp.sign(signOptions).then(function(signed){
+    var signedMsg = signed.data;
+    request.post({url: serverUrl,
+      form:{
+        username: username,
+        password: password,
+        message: signedMsg,
+      }
+    }, function(err,response,body){
+      if(err){
+        status = 0;
+        statusMsg = "Failed to send signed message: " + err;
+        win.webContents.send('recieve-status', [status, statusMsg]);
+      }
+      else{
+        if(response.statusCode == 200)status = 1;
+        else status = 2;
+        statusMsg = body;
+        win.webContents.send('recieve-status', [status, statusMsg]);
+      }
+      return;
+    });
+    status = 1;
+    statusMsg = "Waiting for reply from server...";
+    win.webContents.send('recieve-status', [status, statusMsg]);
+  });
+});
 
 exports.consolelog = function(msg){
   console.log(msg+"\nfrom renderer");
