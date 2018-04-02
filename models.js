@@ -14,7 +14,8 @@ var userSchema = new Schema({
     type: String,
     required: true
   },
-  publicKey: String
+  publicKey: String,
+  userMessage: String
 
 });
 

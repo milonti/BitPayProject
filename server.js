@@ -45,6 +45,7 @@ app.post('/newStuff',(request, response) => {
 
 app.post('/newUser', userController.createNewUser);
 app.post('/authUser',userController.loginUser);
+app.post('/insertUserMessage', userController.insertUserMessage);
 
 app.use((err, request, response, next) => {
   // log the error

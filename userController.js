@@ -36,12 +36,47 @@ exports.loginUser = (request, response) => {
       username: request.body.username,
       password: request.body.password
     }
-    User.authenticate(user, function(err, user){
+    User.authenticate(user.username, user.password, function(err, user){
       if(err){
         next(err);
       }
       else{
-        response.status(200).send('You have succesfully logged in user: ' + user.username);
+        if(user)response.status(200).send('You have succesfully logged in user: ' + user.username);
+        else response.status(401).send('Failed to authenticate user');
+      }
+    })
+  }
+}
+
+exports.insertUserMessage = (request, response) => {
+  //authenticate first
+  if(request.body.username && request.body.password
+  && request.body.message){
+    var userdata = {
+      username: request.body.username,
+      password: request.body.password,
+      userMessage: request.body.message
+    }
+    //Only the user can input their message
+    User.authenticate(userdata.username, userdata.password, function(err,user){
+      if(err){
+        next(err);
+      }
+      else{
+        if(user){
+          User.update({username: userdata.username},{userMessage: userdata.userMessage }, {}, function(err, num){
+            if(err){
+              response.status(500).send(err);
+            }
+            else if(num.nModified > 0){ //Easy check for how many objects were modified
+              response.status(200).send(userdata.username + ' added usermessage:\n' + userdata.userMessage);
+            }
+            else {
+              response.status(200).send('No users found to update (how did you manage to authenticate?)');
+            }
+          })
+        }
+        else response.status(401).send('Failed to authenticate user');
       }
     })
   }
