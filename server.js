@@ -1,6 +1,7 @@
 const express = require('express');
 const models = require('./models');
 const bodyParser = require("body-parser");
+const userController = require("./userController.js");
 //Connect to mongoDB cloud instance
 require("./config/db");
 
@@ -42,27 +43,8 @@ app.post('/newStuff',(request, response) => {
   })
 })
 
-app.post('/newUser', (request, response) => {
-  //Pull specific information
-  //Helps null check and prevents adding extra info into mongo doc
-  var user = request.body.username;
-  var pass = request.body.password;
-  if(user == null || user == undefined){
-    response.status(500).send('No username in payload');
-  }
-  if(pass == null || pass == undefined){
-    response.status(500).send('No password in payload');
-  }
-  let newUser = new models.User({username: user, password: pass});
-  newUser.save((err,user) =>{
-    if(err){
-      response.status(500).send(err);
-    }
-    else{
-      response.status(200).send('Successfully created user '+user.username );
-    }
-  })
-})
+app.post('/newUser', userController.createNewUser);
+app.post('/authUser',userController.loginUser);
 
 app.use((err, request, response, next) => {
   // log the error
