@@ -1,6 +1,7 @@
 const User = require("./models.js").User;
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
+const openpgp = require("openpgp");
 
 exports.createNewUser = (request, response) => {
   //Pull specific information
@@ -48,14 +49,14 @@ exports.loginUser = (request, response) => {
   }
 }
 
-exports.insertUserMessage = (request, response) => {
+exports.insertUserKey = (request, response) => {
   //authenticate first
   if(request.body.username && request.body.password
-  && request.body.message){
+  && request.body.key){
     var userdata = {
       username: request.body.username,
       password: request.body.password,
-      userMessage: request.body.message
+      publicKey: request.body.key
     }
     //Only the user can input their message
     User.authenticate(userdata.username, userdata.password, function(err,user){
@@ -64,17 +65,75 @@ exports.insertUserMessage = (request, response) => {
       }
       else{
         if(user){
-          User.update({username: userdata.username},{userMessage: userdata.userMessage }, {}, function(err, num){
+          User.update({username: userdata.username},{userMessage: userdata.publicKey }, {}, function(err, num){
             if(err){
               response.status(500).send(err);
             }
             else if(num.nModified > 0){ //Easy check for how many objects were modified
-              response.status(200).send(userdata.username + ' added usermessage:\n' + userdata.userMessage);
+              response.status(200).send(userdata.username + ' updated public key:\n' + userdata.publicKey);
             }
             else {
               response.status(200).send('No users found to update (how did you manage to authenticate?)');
             }
           })
+        }
+        else response.status(401).send('Failed to authenticate user');
+      }
+    })
+  }
+}
+
+exports.sendEncodedMessage = (request, response) =>{
+  //authenticate first
+  if(request.body.username && request.body.password
+  && request.body.message){
+    var userdata = {
+      username: request.body.username,
+      password: request.body.password,
+      userMessage: request.body.message
+    }
+    //Only the user can read their own message
+    //Even though we're encrypting it, might as well use password too
+    User.authenticate(userdata.username, userdata.password, function(err,user){
+      if(err){
+        next(err);
+      }
+      else{
+        if(user){
+          //If user has not set up a key, they cannot retrieve encoded messages
+          if(user.publicKey){
+
+          }
+          else response.status(405).send('No public key associated with' + user.username + '. Encryption could not occur.');
+        }
+        else response.status(401).send('Failed to authenticate user');
+      }
+    })
+  }
+}
+
+exports.insertSignedMessage = (request, response) => {
+  //authenticate first
+  if(request.body.username && request.body.password
+  && request.body.message){
+    var userdata = {
+      username: request.body.username,
+      password: request.body.password,
+      userMessage: request.body.message
+    }
+    //Only the user can read their own message
+    //Even though we're encrypting it, might as well use password too
+    User.authenticate(userdata.username, userdata.password, function(err,user){
+      if(err){
+        next(err);
+      }
+      else{
+        if(user){
+          //If user has not set up a key, they cannot store encoded messages
+          if(user.publicKey){
+
+          }
+          else response.status(405).send('No public key associated with' + user.username + '. Encryption could not occur.');
         }
         else response.status(401).send('Failed to authenticate user');
       }

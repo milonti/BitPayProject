@@ -1,6 +1,9 @@
 const express = require('express');
 const models = require('./models');
-const bodyParser = require("body-parser");
+const bodyParser = require('body-parser');
+const openpgp = require('openpgp');
+openpgp.initWorker({path: 'openpgp.worker.js'});
+openpgp.config.aead_protect = true;
 const userController = require("./userController.js");
 //Connect to mongoDB cloud instance
 require("./config/db");
@@ -45,7 +48,8 @@ app.post('/newStuff',(request, response) => {
 
 app.post('/newUser', userController.createNewUser);
 app.post('/authUser',userController.loginUser);
-app.post('/insertUserMessage', userController.insertUserMessage);
+app.post('/insertUserKey', userController.insertUserKey);
+app.post('/insertSignedMessage', userController.insertSignedMessage);
 
 app.use((err, request, response, next) => {
   // log the error
