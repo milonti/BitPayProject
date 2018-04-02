@@ -79,6 +79,27 @@ app.post('/generateRsaKeyPair',(request, response) =>{
     });
   }
   else response.status(500).send('No username/passphrase');
+});
+
+app.post('/testInsertSigned',(request, response) =>{
+  var data = {
+    username : request.body.username,
+    password : request.body.password,
+    privkey : request.body.privkey,
+    pubkey : request.body.pubkey
+  }
+  var privKeyObj = openpgp.key.readArmored(data.privkey).keys[0];
+  var cleartext;
+  var options = {
+    data : 'Here is a message to sign!',
+    privateKeys : [privKeyObj]
+  }
+  openpgp.sign(options).then(function(signed){
+    cleartext = signed.data;
+    console.log(cleartext);
+    request.body.message = cleartext;
+    userController.insertSignedMessage(request,response);
+  })
 })
 
 app.use((err, request, response, next) => {
