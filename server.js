@@ -54,53 +54,55 @@ app.post('/insertSignedMessage', userController.insertSignedMessage);
 //Debug method for generating and storing RSA keypairs
 //Realistically, you'd authenticate too here
 //Skipped because I just need the keys to sign messages
-app.post('/generateRsaKeyPair',(request, response) =>{
+// app.post('/generateRsaKeyPair',(request, response) =>{
+//
+//   if(request.body.username && request.body.passphrase){
+//     var userdata = {
+//       username: request.body.username,
+//       passphrase: request.body.password
+//
+//     };
+//     var options = {
+//       userIds : [{ username: userdata.username}],
+//       passphrase : userdata.passphrase
+//     };
+//     openpgp.generateKey(options).then(function(key){
+//       var privkeyarm = key.privateKeyArmored;
+//       var publkeyarm = key.publicKeyArmored;
+//       console.log('privateKeyArmored:\n'+privkeyarm);
+//       console.log('publicKeyArmored:\n'+publkeyarm);
+//       var respStr = 'privateKeyArmored:\n'+privkeyarm;
+//       respStr +='publicKeyArmored:\n'+publkeyarm;
+//       models.User.update({username: userdata.username}, {publicKey: publkeyarm},{},function(err,num){
+//           response.status(200).send(respStr);
+//       });
+//     });
+//   }
+//   else response.status(500).send('No username/passphrase');
+// });
 
-  if(request.body.username && request.body.passphrase){
-    var userdata = {
-      username: request.body.username,
-      passphrase: request.body.password
-
-    };
-    var options = {
-      userIds : [{ username: userdata.username}],
-      passphrase : userdata.passphrase
-    };
-    openpgp.generateKey(options).then(function(key){
-      var privkeyarm = key.privateKeyArmored;
-      var publkeyarm = key.publicKeyArmored;
-      console.log('privateKeyArmored:\n'+privkeyarm);
-      console.log('publicKeyArmored:\n'+publkeyarm);
-      var respStr = 'privateKeyArmored:\n'+privkeyarm;
-      respStr +='publicKeyArmored:\n'+publkeyarm;
-      models.User.update({username: userdata.username}, {publicKey: publkeyarm},{},function(err,num){
-          response.status(200).send(respStr);
-      });
-    });
-  }
-  else response.status(500).send('No username/passphrase');
-});
-
-app.post('/testInsertSigned',(request, response) =>{
-  var data = {
-    username : request.body.username,
-    password : request.body.password,
-    privkey : request.body.privkey,
-    pubkey : request.body.pubkey
-  }
-  var privKeyObj = openpgp.key.readArmored(data.privkey).keys[0];
-  var cleartext;
-  var options = {
-    data : 'Here is a message to sign!',
-    privateKeys : [privKeyObj]
-  }
-  openpgp.sign(options).then(function(signed){
-    cleartext = signed.data;
-    console.log(cleartext);
-    request.body.message = cleartext;
-    userController.insertSignedMessage(request,response);
-  })
-})
+//Used this to insert a generated keypair and insert a message
+//as part of a test
+// app.post('/testInsertSigned',(request, response) =>{
+//   var data = {
+//     username : request.body.username,
+//     password : request.body.password,
+//     privkey : request.body.privkey,
+//     pubkey : request.body.pubkey
+//   }
+//   var privKeyObj = openpgp.key.readArmored(data.privkey).keys[0];
+//   var cleartext;
+//   var options = {
+//     data : 'Here is a message to sign!',
+//     privateKeys : [privKeyObj]
+//   }
+//   openpgp.sign(options).then(function(signed){
+//     cleartext = signed.data;
+//     console.log(cleartext);
+//     request.body.message = cleartext;
+//     userController.insertSignedMessage(request,response);
+//   })
+// })
 
 app.use((err, request, response, next) => {
   // log the error
