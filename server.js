@@ -37,9 +37,11 @@ app.post('/newUser',(request, response,err) => {
   let newstuff = new models.Stuff({name: stuffName});
   newstuff.save((err, stuff) =>{
     if(err){
-      response.send(500).send(err);
+      response.status(500).send(err);
     }
-    response.status(200).json(stuff).send();
+    else{
+      response.status(200).json(stuff);
+    }
   })
 })
 
