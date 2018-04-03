@@ -23,7 +23,6 @@ app.use((request, response, next) => {
     request.body[keys[key]] = validator.stripLow(request.body[keys[key]],true);
     //Keys require HTML characters to not be escaped
     if(keys[key] != 'message') request.body[keys[key]] = validator.escape(request.body[keys[key]]);
-    console.log(request.body[keys[key]]);
   }
   next();
 })
@@ -53,8 +52,8 @@ app.post('/newStuff',(request, response) => {
   })
 })
 
-app.post('/newUser', userController.createNewUser);
-app.post('/authUser',userController.loginUser);
+// app.post('/newUser', userController.createNewUser);
+// app.post('/authUser',userController.loginUser);
 app.post('/insertUserKey', userController.insertUserKey);
 app.post('/insertSignedMessage', userController.insertSignedMessage);
 
