@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const openpgp = require('openpgp');
 openpgp.initWorker({path: 'openpgp.worker.js'});
 openpgp.config.aead_protect = true;
+const helmet = require('helmet');
 const userController = require("./userController.js");
 //Connect to mongoDB cloud instance
 require("../config/db");
@@ -11,12 +12,7 @@ require("../config/db");
 const app = express();
 const port = 3000;
 
-app.use((request,response, next) => {
-  console.log("");
-  console.log(request.url);
-  next();
-})
-
+app.use(helmet());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
