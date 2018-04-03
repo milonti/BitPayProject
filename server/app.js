@@ -27,30 +27,30 @@ app.use((request, response, next) => {
   next();
 })
 //Basic get response
-app.get('/*', (request, response) => {
-  response.send('Hello user ' + request.chance);
-})
+// app.get('/*', (request, response) => {
+//   response.send('Hello user ' + request.chance);
+// })
 //Basic post response
-app.post('/', (request, response) => {
-  response.send(request.body);
-})
+// app.post('/', (request, response) => {
+//   response.send(request.body);
+// })
 
 //Basic test creation
-app.post('/newStuff',(request, response) => {
-  var stuffName = request.body.username;
-  if(stuffName == null || stuffName == undefined){
-    response.status(500).send('No username found');
-  }
-  let newstuff = new models.Stuff(request.body);
-  newstuff.save((err, stuff) =>{
-    if(err){
-      response.status(500).send(err);
-    }
-    else{
-      response.status(200).json(stuff);
-    }
-  })
-})
+// app.post('/newStuff',(request, response) => {
+//   var stuffName = request.body.username;
+//   if(stuffName == null || stuffName == undefined){
+//     response.status(500).send('No username found');
+//   }
+//   let newstuff = new models.Stuff(request.body);
+//   newstuff.save((err, stuff) =>{
+//     if(err){
+//       response.status(500).send(err);
+//     }
+//     else{
+//       response.status(200).json(stuff);
+//     }
+//   })
+// })
 
 // app.post('/newUser', userController.createNewUser);
 // app.post('/authUser',userController.loginUser);

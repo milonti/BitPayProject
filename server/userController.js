@@ -102,7 +102,8 @@ exports.sendEncodedMessage = (request, response) =>{
         if(user){
           //If user has not set up a key, they cannot retrieve encoded messages
           if(user.publicKey){
-
+            //I realized this was not a requirement of the challenge and stopped coding
+            //this function here
           }
           else response.status(405).send('No public key associated with' + user.username + '. Encryption could not occur.');
         }
