@@ -131,13 +131,20 @@ exports.insertSignedMessage = (request, response) => {
         if(user){
           //If user has not set up a key, they cannot store encoded messages
           if(user.publicKey){
-            var options = {
-              message: openpgp.cleartext.readArmored(userdata.userMessage),
-              publicKeys : openpgp.key.readArmored(user.publicKey).keys
+            var options;
+            try{
+              options = {
+                message: openpgp.cleartext.readArmored(userdata.userMessage),
+                publicKeys : openpgp.key.readArmored(user.publicKey).keys
+              }
+            }
+            catch (e){
+              response.status(500).send("Malformed data encountered by openpgp: " + e);
+              return;
             }
 
+
             openpgp.verify(options).then(function(verified){
-              console.log(verified.signatures);
               valid = verified.signatures[0].valid;
               if(valid){
                 //If verification succeeds add message to database

@@ -5,6 +5,7 @@ const openpgp = require('openpgp');
 openpgp.initWorker({path: 'openpgp.worker.js'});
 openpgp.config.aead_protect = true;
 const helmet = require('helmet');
+const validator = require('validator');
 const userController = require("./userController.js");
 //Connect to mongoDB cloud instance
 require("../config/db");
@@ -16,6 +17,16 @@ app.use(helmet());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
+app.use((request, response, next) => {
+  var keys = Object.keys(request.body);
+  for(var key in keys){
+    request.body[keys[key]] = validator.stripLow(request.body[keys[key]],true);
+    //Keys require HTML characters to not be escaped
+    if(keys[key] != 'message') request.body[keys[key]] = validator.escape(request.body[keys[key]]);
+    console.log(request.body[keys[key]]);
+  }
+  next();
+})
 //Basic get response
 app.get('/*', (request, response) => {
   response.send('Hello user ' + request.chance);
