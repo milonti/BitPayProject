@@ -83,35 +83,35 @@ exports.insertUserKey = (request, response) => {
   }
 }
 
-exports.sendEncodedMessage = (request, response) =>{
-  //authenticate first
-  if(request.body.username && request.body.password
-  && request.body.message){
-    var userdata = {
-      username: request.body.username,
-      password: request.body.password,
-      userMessage: request.body.message
-    }
-    //Only the user can read their own message
-    //Even though we're encrypting it, might as well use password too
-    User.authenticate(userdata.username, userdata.password, function(err,user){
-      if(err){
-        next(err);
-      }
-      else{
-        if(user){
-          //If user has not set up a key, they cannot retrieve encoded messages
-          if(user.publicKey){
-            //I realized this was not a requirement of the challenge and stopped coding
-            //this function here
-          }
-          else response.status(405).send('No public key associated with' + user.username + '. Encryption could not occur.');
-        }
-        else response.status(401).send('Failed to authenticate user');
-      }
-    })
-  }
-}
+// exports.sendEncodedMessage = (request, response) =>{
+//   //authenticate first
+//   if(request.body.username && request.body.password
+//   && request.body.message){
+//     var userdata = {
+//       username: request.body.username,
+//       password: request.body.password,
+//       userMessage: request.body.message
+//     }
+//     //Only the user can read their own message
+//     //Even though we're encrypting it, might as well use password too
+//     User.authenticate(userdata.username, userdata.password, function(err,user){
+//       if(err){
+//         next(err);
+//       }
+//       else{
+//         if(user){
+//           //If user has not set up a key, they cannot retrieve encoded messages
+//           if(user.publicKey){
+//             //I realized this was not a requirement of the challenge and stopped coding
+//             //this function here
+//           }
+//           else response.status(405).send('No public key associated with' + user.username + '. Encryption could not occur.');
+//         }
+//         else response.status(401).send('Failed to authenticate user');
+//       }
+//     })
+//   }
+// }
 
 exports.insertSignedMessage = (request, response) => {
   //authenticate first
