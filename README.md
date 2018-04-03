@@ -31,10 +31,12 @@ The client then sends a POST request to the server where it is authenticated and
 
 ## Testing Accounts
 There are three accounts currently fully-enabled with keys on the database.
-1: Username \- steven
-   Password \- 1234
-   Private Key \-
-   ...
+1. First Account
+   - Username \- steven
+   - Password \- 1234
+   - Private Key \-
+   
+```
 -----BEGIN PGP PRIVATE KEY BLOCK-----
 Version: OpenPGP.js v3.0.3
 Comment: https://openpgpjs.org
@@ -96,9 +98,11 @@ gynQSjtBQKy4T9IrTHL1OcX/L1JC+nEO54LdIUJLkE/7ZTKXEK/nii1yB0Im
 vqbJzbuQhUb+bt5MOkgC6RtiiiJlig==
 =e7Eh
 -----END PGP PRIVATE KEY BLOCK-----
-   ...
-   Public Key \-
-   ...
+```
+
+   - Public Key \-
+   
+```
 -----BEGIN PGP PUBLIC KEY BLOCK-----
 Version: OpenPGP.js v3.0.3
 Comment: https://openpgpjs.org
@@ -131,11 +135,14 @@ T4udgynQSjtBQKy4T9IrTHL1OcX/L1JC+nEO54LdIUJLkE/7ZTKXEK/nii1y
 B0ImvqbJzbuQhUb+bt5MOkgC6RtiiiJlig==
 =v7NC
 -----END PGP PUBLIC KEY BLOCK-----
-   ...
-2: Username \- steven2
-   Password \- 1234
-   Private Key \-
-   ...
+```
+
+2. Second Account
+   - Username \- steven2
+   - Password \- 1234
+   - Private Key \-
+   
+```
 -----BEGIN PGP PRIVATE KEY BLOCK-----
 Version: OpenPGP.js v3.0.3
 Comment: https://openpgpjs.org
@@ -197,9 +204,11 @@ MVLpvE/mZS45OZiYX5dhWCyn+gi/T8QUTZBqNMy7asiK1KKct+BhPyS3V+sU
 UMHdFy9Y53W4tuOCPAU7nxYXHAIH0w==
 =cvtB
 -----END PGP PRIVATE KEY BLOCK-----
-   ...
-   Public Key \-
-   ...
+```
+
+   - Public Key \-
+   
+```
 -----BEGIN PGP PUBLIC KEY BLOCK-----
 Version: OpenPGP.js v3.0.3
 Comment: https://openpgpjs.org
@@ -232,11 +241,14 @@ emFBmdvFqVnHQY6jgVXj7xAU+bC6glrbfc176SjhGNC0eZyDaSUJypTQfUQi
 V+sUUMHdFy9Y53W4tuOCPAU7nxYXHAIH0w==
 =xwsy
 -----END PGP PUBLIC KEY BLOCK-----
-   ...
-2: Username \- steven3
-   Password \- 4321
-   Private Key \-
-   ...
+```
+
+3. Third Account
+   - Username \- steven3
+   - Password \- 4321
+   - Private Key \-
+   
+```
 -----BEGIN PGP PRIVATE KEY BLOCK-----
 Version: OpenPGP.js v3.0.3
 Comment: https://openpgpjs.org
@@ -298,9 +310,11 @@ awoEvNcfIueLbbBu2vhRkkYBekPxkM+iWYOCiaqt8jx10rAX+TvKDnXUOvBg
 PPgrxzIGPzrIQkq8GHMQ5eT6bEsb7A==
 =0YQO
 -----END PGP PRIVATE KEY BLOCK-----
-   ...
-   Public Key \-
-   ...
+```
+
+   - Public Key \-
+   
+```
 -----BEGIN PGP PUBLIC KEY BLOCK-----
 Version: OpenPGP.js v3.0.3
 Comment: https://openpgpjs.org
@@ -333,4 +347,4 @@ FIMIawoEvNcfIueLbbBu2vhRkkYBekPxkM+iWYOCiaqt8jx10rAX+TvKDnXU
 OvBgPPgrxzIGPzrIQkq8GHMQ5eT6bEsb7A==
 =VwDo
 -----END PGP PUBLIC KEY BLOCK-----
-   ...
+```
