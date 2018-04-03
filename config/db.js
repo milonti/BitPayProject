@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
+envVariables = require("./envVariables.js");
 
-const uri = "mongodb://server:ServerTokenStealth@bitpaycodechallenge-shard-00-00-sw9gb.mongodb.net:27017,bitpaycodechallenge-shard-00-01-sw9gb.mongodb.net:27017,bitpaycodechallenge-shard-00-02-sw9gb.mongodb.net:27017/test?ssl=true&replicaSet=BitPayCodeChallenge-shard-0&authSource=admin"
+const uri = envVariables.mongoConnStr;
 
 const options = {
   reconnectTries: Number.MAX_VALUE,
