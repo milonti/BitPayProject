@@ -1,7 +1,7 @@
 # Bit Pay Code Challenge:
 ## Signed Message Sender Client & Server
 
-##Testing Instructions
+## Testing Instructions
 Clone repo, run `npm install` at root of repo. If your machine doesn't have electron installed as a global npm package, also run `npm install -g electron' and make sure your terminal of choice can run the `electron` command. Run `node server/app.js` to start the server. Run `electron client/app.js` to start the client.
 
 ## Server Piece
