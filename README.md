@@ -1,6 +1,9 @@
 # Bit Pay Code Challenge:
 ## Signed Message Sender Client & Server
 
+## Testing Instructions
+Clone repo, run `npm install` at root of repo. If your machine doesn't have electron installed as a global npm package, also run `npm install -g electron' and make sure your terminal of choice can run the `electron` command. Run `node server/app.js` to start the server. Run `electron client/app.js` to start the client.
+
 ## Server Piece
 The server was written in node.js and primarily relied on express and moongoose. It set up a rest based service with different routes that could be hit from the client in order to perform specific actions. The server stored its information on a cloud-based mongoDB instance, provided by mongoDB's Atlas service. This helped abstract away some of the database security. Note, for the purpose of this challenge, the DB is configured to accept connections from any/all IPs, to help facilitate running this test on not my local machine. In reality, the server would only whitelist the IP of production servers deployed with this code.
 
