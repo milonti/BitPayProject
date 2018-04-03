@@ -62,9 +62,6 @@ ipcMain.on('submit-signed-message', (e,args) => {
     data : message,
     privateKeys : [openpgp.key.readArmored(key).keys[0]]
   }
-  // status = 1;
-  // statusMsg = "Signing message..."
-  // win.webContents.send('recieve-status', [status, statusMsg]);
   openpgp.sign(signOptions).then(function(signed){
     var signedMsg = signed.data;
     request.post({url: serverUrl,
@@ -89,6 +86,10 @@ ipcMain.on('submit-signed-message', (e,args) => {
     });
     status = 1;
     statusMsg = "Waiting for reply from server...";
+    win.webContents.send('recieve-status', [status, statusMsg]);
+  }).catch(err => {
+    status = 0;
+    statusMsg = "Failed to sign message: \r\n" + err;
     win.webContents.send('recieve-status', [status, statusMsg]);
   });
 });

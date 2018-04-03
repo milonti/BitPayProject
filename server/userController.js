@@ -126,7 +126,7 @@ exports.insertSignedMessage = (request, response) => {
     //Even though we're encrypting it, might as well use password too
     User.authenticate(userdata.username, userdata.password, function(err,user){
       if(err){
-        next(err);
+        response.status(500).send(err);
       }
       else{
         if(user){
